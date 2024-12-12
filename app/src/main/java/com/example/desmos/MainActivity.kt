@@ -19,8 +19,6 @@ class MainActivity : AppCompatActivity() {
             DataBindingUtil.setContentView(this, R.layout.activity_main)
         setContentView(binding.root)
 
-
-
         binding.s.adapter = ArrayAdapter<String>(
             this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
             resources.getStringArray(R.array.dimensions))
@@ -30,9 +28,18 @@ class MainActivity : AppCompatActivity() {
 
         binding.s.onItemSelectedListener = object:AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                val url: String =
-                    if(position == 0) "https://wolframalpha.com/"//"https://www.desmos.com/calculator?lang=ru"
-                    else "https://www.desmos.com/3d?lang=ru"
+                val url: String = when(position){
+                    0 ->{
+                        "https://desmos.com/calculator?lang=ru"
+                    }
+                    1 ->{
+                        "https://desmos.com/3d?lang=ru"
+                    }
+                    else->{
+                        "https://wolframalpha.com"
+                    }
+                }
+
 
                 toast.show()
 

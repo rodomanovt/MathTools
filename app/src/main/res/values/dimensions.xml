@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="dimensions">
-        <item>2D</item>
-        <item>3D</item>
+        <item>Desmos 2D</item>
+        <item>Desmos 3D</item>
+        <item>WolframAlpha</item>
     </string-array>
 </resources>
