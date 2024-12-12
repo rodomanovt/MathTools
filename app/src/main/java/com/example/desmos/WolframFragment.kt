@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
+import com.example.desmos.databinding.FragmentDesmos2dBinding
+import com.example.desmos.databinding.FragmentWolframBinding
 
 
 private const val ARG_PARAM1 = "param1"
@@ -17,6 +20,8 @@ class WolframFragment : Fragment() {
 
     private var param1: String? = null
     private var param2: String? = null
+
+    var binding: FragmentWolframBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,26 +35,25 @@ class WolframFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_wolfram, container, false)
 
-        return inflater.inflate(R.layout.fragment_wolfram, container, false)
+        return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val binding: FragmentWolframBinding =
-//            DataBindingUtil.setContentView(this, R.layout.fragment_wolfram)
-        val wolfram = view.findViewById<WebView>(R.id.wolfram)
-        wolfram.settings.javaScriptEnabled = true
+
+        binding!!.wolfram.settings.javaScriptEnabled = true
 
         val url = "https://wolframalpha.com"
-        wolfram.webViewClient = object : WebViewClient(){
+        binding!!.wolfram.webViewClient = object : WebViewClient(){
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                 view?.loadUrl(url!!)
                 return true
             }
         }
-        wolfram.loadUrl(url)
+        binding!!.wolfram.loadUrl(url)
     }
 
     companion object {

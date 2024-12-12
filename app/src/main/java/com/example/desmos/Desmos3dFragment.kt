@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
+import com.example.desmos.databinding.FragmentDesmos2dBinding
+import com.example.desmos.databinding.FragmentDesmos3dBinding
 
 
 private const val ARG_PARAM1 = "param1"
@@ -18,6 +21,8 @@ class Desmos3dFragment : Fragment() {
 
     private var param1: String? = null
     private var param2: String? = null
+
+    var binding: FragmentDesmos3dBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,26 +36,24 @@ class Desmos3dFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_desmos3d, container, false)
 
-        return inflater.inflate(R.layout.fragment_desmos3d, container, false)
+        return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val binding: FragmentDesmos3dBinding =
-//            DataBindingUtil.setContentView(this, R.layout.fragment_desmos3d)
-        val desmos3d = view.findViewById<WebView>(R.id.desmos3d)
-        desmos3d.settings.javaScriptEnabled = true
+        binding!!.desmos3d.settings.javaScriptEnabled = true
 
         val url = "https://desmos.com/3d?lang=ru"
-        desmos3d.webViewClient = object : WebViewClient(){
+        binding!!.desmos3d.webViewClient = object : WebViewClient(){
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                 view?.loadUrl(url!!)
                 return true
             }
         }
-        desmos3d.loadUrl(url)
+        binding!!.desmos3d.loadUrl(url)
     }
 
     companion object {
