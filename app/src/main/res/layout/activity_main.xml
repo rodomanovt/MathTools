@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"/>
 
+
         <FrameLayout
             android:id="@+id/framelayout"
             android:layout_width="match_parent"
