@@ -33,9 +33,17 @@ class MainActivity : AppCompatActivity() {
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.framelayout, Desmos3dFragment()).commit()
                     }
-                    else->{
+                    2->{
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.framelayout, WolframFragment()).commit()
+                    }
+                    3->{
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.framelayout, Geogebra3dFragment()).commit()
+                    }
+                    else->{
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.framelayout, Desmos2dFragment()).commit()
                     }
                 }
 
