@@ -8,25 +8,21 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.databinding.DataBindingUtil
-import com.example.desmos.databinding.FragmentGeogebra3dBinding
+import com.example.desmos.databinding.FragmentWebViewBinding
 
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val ARG_PARAM1 = "websiteIndex"
 
 
-class Geogebra3dFragment : Fragment() {
+class WebViewFragment : Fragment() {
+    private var websiteIndex: Int? = null
 
-    private var param1: String? = null
-    private var param2: String? = null
-
-    var binding: FragmentGeogebra3dBinding? = null
+    private var binding: FragmentWebViewBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            websiteIndex = it.getInt(ARG_PARAM1)
         }
     }
 
@@ -34,8 +30,8 @@ class Geogebra3dFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_geogebra3d, container, false)
 
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_web_view, container, false)
 
         return binding!!.root
     }
@@ -43,25 +39,25 @@ class Geogebra3dFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding!!.geogebra3d.settings.javaScriptEnabled = true
+        binding!!.webview.settings.javaScriptEnabled = true
 
-        val url = "https://geogebra.org/3d"
-        binding!!.geogebra3d.webViewClient = object : WebViewClient(){
+        val websiteIndex = arguments?.getInt("websiteIndex", 0)
+        val url = Websites().getUrls()[websiteIndex!!]
+        binding!!.webview.webViewClient = object : WebViewClient(){
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                 view?.loadUrl(url!!)
                 return true
             }
         }
-        binding!!.geogebra3d.loadUrl(url)
+        binding!!.webview.loadUrl(url)
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Geogebra3dFragment().apply {
+        fun newInstance(websiteIndex: Int) =
+            WebViewFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putInt(ARG_PARAM1, websiteIndex)
                 }
             }
     }
